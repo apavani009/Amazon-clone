@@ -1,10 +1,11 @@
+
 const { expect } = require("chai")
 
 const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
-// Global constants for listing an item...
+
 const ID = 1
 const NAME = "Shoes"
 const CATEGORY = "Clothing"
@@ -18,10 +19,10 @@ describe("Dappazon", () => {
   let deployer, buyer
 
   beforeEach(async () => {
-    // Setup accounts
+    
     [deployer, buyer] = await ethers.getSigners()
 
-    // Deploy contract
+    
     const Dappazon = await ethers.getContractFactory("Dappazon")
     dappazon = await Dappazon.deploy()
   })
@@ -36,7 +37,7 @@ describe("Dappazon", () => {
     let transaction
 
     beforeEach(async () => {
-      // List a item
+      
       transaction = await dappazon.connect(deployer).list(ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK)
       await transaction.wait()
     })
@@ -62,11 +63,11 @@ describe("Dappazon", () => {
     let transaction
 
     beforeEach(async () => {
-      // List a item
+      
       transaction = await dappazon.connect(deployer).list(ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK)
       await transaction.wait()
 
-      // Buy a item
+    
       transaction = await dappazon.connect(buyer).buy(ID, { value: COST })
       await transaction.wait()
     })
@@ -98,18 +99,18 @@ describe("Dappazon", () => {
     let balanceBefore
 
     beforeEach(async () => {
-      // List a item
+      
       let transaction = await dappazon.connect(deployer).list(ID, NAME, CATEGORY, IMAGE, COST, RATING, STOCK)
       await transaction.wait()
 
-      // Buy a item
+      
       transaction = await dappazon.connect(buyer).buy(ID, { value: COST })
       await transaction.wait()
 
-      // Get Deployer balance before
+      
       balanceBefore = await ethers.provider.getBalance(deployer.address)
 
-      // Withdraw
+    
       transaction = await dappazon.connect(deployer).withdraw()
       await transaction.wait()
     })

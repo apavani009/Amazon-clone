@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 
-// Components
+
 import Rating from './Rating'
 
 import close from '../assets/close.svg'
@@ -25,7 +25,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
   const buyHandler = async () => {
     const signer = await provider.getSigner()
 
-    // Buy item...
+    
     let transaction = await dappazon.connect(signer).buy(item.id, { value: item.cost })
     await transaction.wait()
 
